@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgxSoapService, Client, ISoapMethodResponse } from 'ngx-soap';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'my-app',
@@ -22,7 +23,9 @@ export class AppComponent  {
           intA: this.intA,
           intB: this.intB
         };
-        (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
+        let promise1 = (<any>this.client).CalculatorSoap.Add(body)
+        console.log(promise1);
+        from(promise1).subscribe((res: ISoapMethodResponse) => {
           this.result = res.result.AddResult;
           console.log(res);
         });
