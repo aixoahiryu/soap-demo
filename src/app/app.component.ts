@@ -24,25 +24,48 @@ export class AppComponent  {
     // this.soap.createClient('http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl').then(client => this.client = client);
 	}
 
+  // add() {
+  //       const body = {
+  //         intA: this.intA,
+  //         intB: this.intB
+  //       };
+  //       let promise1 = (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
+  //         this.result = res.result.AddResult;
+  //         console.log(res);
+  //       });
+  //   }
+
   add() {
-        const body = {
-          intA: this.intA,
-          intB: this.intB
-        };
-        let promise1 = (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
-          this.result = res.result.AddResult;
-          console.log(res);
-        });
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://www.dneonline.com/calculator.asmx?WSDL', true);
+
+    // The following variable contains the xml SOAP request.
+    const sr =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+          <soapenv:Header/>
+          <soapenv:Body>
+            <tem:Add>
+              <tem:intA>`+this.intA+`</tem:intA>
+              <tem:intB>`+this.intB+`</tem:intB>
+            </tem:Add>
+          </soapenv:Body>
+        </soapenv:Envelope>`;
+
+    xmlhttp.onreadystatechange =  () => {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                const xml = xmlhttp.responseXML;
+                console.log(xmlhttp.response);
+                // Here I'm getting the value contained by the <return> node.
+                const response_number = parseInt(xml.getElementsByTagName('AddResult')[0].childNodes[0].nodeValue);
+                // Print result square number.
+                console.log(response_number);
+            }
+        }
     }
-  
-  amazon(){
-    const body = {
-          intA: this.intA,
-          intB: this.intB
-        };
-        (<any>this.client).ItemSearch(body).subscribe((res: ISoapMethodResponse) => {
-          this.result = res.result.AddResult;
-          console.log(res);
-        });
+    // Send the POST request.
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.responseType = 'document';
+    xmlhttp.send(sr);
   }
 }
