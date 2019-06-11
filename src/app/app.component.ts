@@ -33,7 +33,7 @@ export class AppComponent  {
           intA: this.intA,
           intB: this.intB
         };
-        (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
+        (<any>this.client).ItemSearch(body).subscribe((res: ISoapMethodResponse) => {
           this.result = res.result.AddResult;
           console.log(res);
         });
