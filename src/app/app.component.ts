@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgxSoapService, Client, ISoapMethodResponse } from 'ngx-soap';
 import { from } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'my-app',
@@ -13,7 +14,12 @@ export class AppComponent  {
   intB: number;
   result: number;
 
-	constructor(private soap: NgxSoapService, ) {
+	constructor(private soap: NgxSoapService, private http: HttpClient) {
+    // this.http.get('/calculator/calculator.asmx?WSDL').subscribe(response => {
+    //   this.soap.createClient(response as string).then(client => this.client = client);
+    // });
+
+
 		this.soap.createClient('http://www.dneonline.com/calculator.asmx?WSDL').then(client => this.client = client);
     // this.soap.createClient('http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl').then(client => this.client = client);
 	}
@@ -23,9 +29,7 @@ export class AppComponent  {
           intA: this.intA,
           intB: this.intB
         };
-        let promise1 = (<any>this.client).CalculatorSoap.Add(body)
-        console.log(promise1);
-        from(promise1).subscribe((res: ISoapMethodResponse) => {
+        let promise1 = (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
           this.result = res.result.AddResult;
           console.log(res);
         });
