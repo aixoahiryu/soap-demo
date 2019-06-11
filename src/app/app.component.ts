@@ -60,6 +60,7 @@ export class AppComponent  {
                 const response_number = parseInt(xml.getElementsByTagName('AddResult')[0].childNodes[0].nodeValue);
                 // Print result square number.
                 console.log(response_number);
+                this.result = response_number;
             }
         }
     }
