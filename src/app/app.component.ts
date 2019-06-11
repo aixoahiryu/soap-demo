@@ -13,8 +13,8 @@ export class AppComponent  {
   result: number;
 
 	constructor(private soap: NgxSoapService, ) {
-		// this.soap.createClient('http://www.dneonline.com/calculator.asmx?WSDL').then(client => this.client = client);
-    this.soap.createClient('http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl').then(client => this.client = client);
+		this.soap.createClient('http://www.dneonline.com/calculator.asmx?WSDL').then(client => this.client = client);
+    // this.soap.createClient('http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl').then(client => this.client = client);
 	}
 
   add() {
