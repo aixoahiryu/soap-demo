@@ -69,4 +69,109 @@ export class AppComponent  {
     xmlhttp.responseType = 'document';
     xmlhttp.send(sr);
   }
+
+  sub() {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://www.dneonline.com/calculator.asmx?WSDL', true);
+
+    // The following variable contains the xml SOAP request.
+    const sr =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+          <soapenv:Header/>
+          <soapenv:Body>
+            <tem:Subtract>
+              <tem:intA>`+this.intA+`</tem:intA>
+              <tem:intB>`+this.intB+`</tem:intB>
+            </tem:Subtract>
+          </soapenv:Body>
+        </soapenv:Envelope>`;
+
+    xmlhttp.onreadystatechange =  () => {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                const xml = xmlhttp.responseXML;
+                console.log(xmlhttp.response);
+                // Here I'm getting the value contained by the <return> node.
+                const response_number = parseInt(xml.getElementsByTagName('SubtractResult')[0].childNodes[0].nodeValue);
+                // Print result square number.
+                console.log(response_number);
+                this.result = response_number;
+            }
+        }
+    }
+    // Send the POST request.
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.responseType = 'document';
+    xmlhttp.send(sr);
+  }
+
+  mul() {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://www.dneonline.com/calculator.asmx?WSDL', true);
+
+    // The following variable contains the xml SOAP request.
+    const sr =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+          <soapenv:Header/>
+          <soapenv:Body>
+            <tem:Multiply>
+              <tem:intA>`+this.intA+`</tem:intA>
+              <tem:intB>`+this.intB+`</tem:intB>
+            </tem:Multiply>
+          </soapenv:Body>
+        </soapenv:Envelope>`;
+
+    xmlhttp.onreadystatechange =  () => {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                const xml = xmlhttp.responseXML;
+                console.log(xmlhttp.response);
+                // Here I'm getting the value contained by the <return> node.
+                const response_number = parseInt(xml.getElementsByTagName('MultiplyResult')[0].childNodes[0].nodeValue);
+                // Print result square number.
+                console.log(response_number);
+                this.result = response_number;
+            }
+        }
+    }
+    // Send the POST request.
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.responseType = 'document';
+    xmlhttp.send(sr);
+  }
+
+  div() {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('POST', 'http://www.dneonline.com/calculator.asmx?WSDL', true);
+
+    // The following variable contains the xml SOAP request.
+    const sr =
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+          <soapenv:Header/>
+          <soapenv:Body>
+            <tem:Divide>
+              <tem:intA>`+this.intA+`</tem:intA>
+              <tem:intB>`+this.intB+`</tem:intB>
+            </tem:Divide>
+          </soapenv:Body>
+        </soapenv:Envelope>`;
+
+    xmlhttp.onreadystatechange =  () => {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                const xml = xmlhttp.responseXML;
+                console.log(xmlhttp.response);
+                // Here I'm getting the value contained by the <return> node.
+                const response_number = parseInt(xml.getElementsByTagName('DivideResult')[0].childNodes[0].nodeValue);
+                // Print result square number.
+                console.log(response_number);
+                this.result = response_number;
+            }
+        }
+    }
+    // Send the POST request.
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.responseType = 'document';
+    xmlhttp.send(sr);
+  }
 }
