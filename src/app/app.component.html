@@ -1,8 +1,9 @@
 <div>
-  Int A: <input type="text" /> <br>
-  Int B: <input type="text" /> <br>
-  <button>Add</button>
-  <button>Subtract</button>
-  <button>Multiply</button>
-  <button>Divide</button>
+  Int A: <input type="text" [(ngModel)]="intA" /> <br>
+  Int B: <input type="text" [(ngModel)]="intB" /> <br>
+  <button (click)="add()" >Add</button>
+  <button (click)="sub()" >Subtract</button>
+  <button (click)="mul()" >Multiply</button>
+  <button (click)="div()" >Divide</button> <br>
+  Result: <input type="text" [(ngModel)]="result" /> <br>
 </div>

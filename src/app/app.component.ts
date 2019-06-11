@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgxSoapService, Client, ISoapMethodResponse } from 'ngx-soap';
 
 @Component({
   selector: 'my-app',
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  name = 'Angular';
+  client: Client;
+  intA: number;
+  intB: number;
+  result: number;
+
+	constructor(private soap: NgxSoapService) {
+		this.soap.createClient('http://www.dneonline.com/calculator.asmx?WSDL').then(client => this.client = client);
+	}
+
+  add() {
+        const body = {
+          intA: this.intA,
+          intB: this.intB
+        };
+        (<any>this.client).Add(body).subscribe((res: ISoapMethodResponse) => {
+          this.result = res.result.AddResult;
+          console.log(res);
+        });
+    }
 }
